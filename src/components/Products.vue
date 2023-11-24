@@ -4,9 +4,9 @@ import {eventBus} from "../main.js";
 
 export default {
   name: "Products",
-  data(){
+  data() {
     return {
-      productList : [],
+      productList: [],
     }
   },
   components: {
@@ -16,15 +16,21 @@ export default {
     eventBus.$on("addProduct", (product) => {
       this.productList.push(product);
     });
+  },
+  watch : {
+    productList: function (val) {
+      const length = val.length;
+      eventBus.$emit("productListLength", length);
+    },
   }
-
 }
 </script>
 
 <template>
   <div class="row product-container">
     <Product v-for="product in productList">
-      <img class="card-img-top" :src="product.selectedImage==null?'/src/assets/default.png':product.selectedImage" alt="Card image cap">
+      <img class="card-img-top" :src="product.selectedImage==null?'/src/assets/default.png':product.selectedImage"
+           alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title">{{ product.title }}</h5>
         <small>
