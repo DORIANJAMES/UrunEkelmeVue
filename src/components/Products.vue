@@ -14,14 +14,13 @@ export default {
   },
   created() {
     eventBus.$on("addProduct", (product) => {
-      this.productList.push(product);
+      if (this.productList.length < 10) {
+        this.productList.push(product);
+        eventBus.$emit("productListLength", this.productList.length)
+      } else {
+        alert("Sadece 10 ürün eklenebilir");
+      }
     });
-  },
-  watch : {
-    productList: function (val) {
-      const length = val.length;
-      eventBus.$emit("productListLength", length);
-    },
   }
 }
 </script>

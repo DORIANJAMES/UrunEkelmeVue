@@ -6,7 +6,7 @@
     <br><br>
     <Progress/>
     <br><br>
-    <h3 class="text-center">Eklenen Ürünlerin Listesi</h3>
+    <h3 v-if="productListCount>0" class="text-center">Eklenen Ürünlerin Listesi</h3>
     <hr>
     <Products/>
 
@@ -19,12 +19,24 @@
 import NewProduct from "./components/NewProduct.vue";
 import Progress from "./components/Progress.vue";
 import Products from "./components/Products.vue";
+import {eventBus} from "./main.js";
   export default {
+    name: "App",
+    data(){
+      return{
+        productListCount:0
+      }
+    },
     components: {
       Products,
       Progress,
       NewProduct,
     },
+    mounted() {
+      eventBus.$on("productListLength", (length) => {
+        this.productListCount = length;
+      });
+    }
   }
 </script>
 

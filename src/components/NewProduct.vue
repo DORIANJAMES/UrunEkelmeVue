@@ -19,6 +19,10 @@ export default {
       this.product.selectedImage = URL.createObjectURL(file);
     },
     addProduct (){
+      if (this.product.title == null || this.product.count == null || this.product.price == null) {
+        alert("Lütfen tüm alanları doldurunuz");
+        return;
+      }
       this.product.totalPrice = this.product.count * this.product.price;
       eventBus.$emit("addProduct", this.product);
       this.product = {
